@@ -42,7 +42,18 @@
                                     <ul id="navigatio" class="text-right" >
                                         @guest
                                             <li><a class="active" href="{{ route('login') }}">Login</a></li>
+                                        @else
+
+                                        <li><a href="#"> {{ Auth::user()->nome }} <i class="ti-angle-down"></i></a>
+                                            <ul class="submenu">
+                                                <li>
+                                                    <a href="{{ route('logout') }}" >Sair</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
                                         @endguest
+                                        
                                         
                                     </ul>
                                 </nav>
