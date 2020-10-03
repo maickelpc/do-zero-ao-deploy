@@ -8,8 +8,15 @@ class Categoria extends Model
 {
     protected $table = 'categorias';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = ['nome'];
+
+
+    public function lotes()
+    {
+        return $this->hasMany('App\Lote', 'categoria_id');
+    }
+
 
 }

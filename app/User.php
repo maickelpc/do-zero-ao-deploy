@@ -54,7 +54,31 @@ class User extends Authenticatable
     }
 
     
+    public function lotesVenda()
+    {
+        return $this->hasMany('App\Lote', 'proprietario_id');
+    }
+
+    public function lotesComprados()
+    {
+        return $this->hasMany('App\Lote', 'vencedor_id');
+    }
 
 
+    public function interessados(){
+        return $this->belongsToMany('App\Lote', 'usuario_lote_interessados', 'user_id', 'lote_id' );
+    }
+
+    public function lances(){
+        return $this->hasMany('App\Lance', 'user_id');
+    }
+
+    public function avaliacoesEnviadas(){
+        return $this->hasMany('App\Avaliacao', 'avaliador_id');
+    }
+
+    public function avaliacoesRecebidas(){
+        return $this->hasMany('App\Avaliacao', 'avaliado_id');
+    }
 
 }
