@@ -12,6 +12,69 @@ use Carbon\Carbon;
 
 class UsuarioController extends Controller
 {
+
+    public function mudaBloqueio(Request $request, $idusuario){
+
+        $usuario = User::findOrFail($idusuario);
+
+        $usuario->bloqueado = !$usuario->bloqueado;
+        $usuario->save();
+
+        return redirect()->route('usuarios.ver', $usuario->id);
+        
+    }
+
+
+    public function ver(Request $request, $idusuario){
+        
+        $usuario = User::findOrFail($idusuario);
+
+        return view('usuarios.ver')
+            ->with('usuario', $usuario);
+
+
+    }
+
+    public function listar(Request $request){
+        
+        $usuariosQuery = User::where('created_at', '!=', null);
+
+        if ($request->has('busca') && $request->get('busca') != ''){
+            $usuariosQuery = $usuariosQuery->where(function($query) use($request){
+
+                return $query->where('nome', 'ilike', "%{$request->get('busca') }%")
+                ->orWhere('sobrenome', 'ilike', "%{$request->get('busca') }%")
+                ->orWhere('email', 'ilike', "%{$request->get('busca') }%");
+            });
+        }
+            
+        
+        if ( 
+            $request->has('bloqueado') && 
+            $request->get('bloqueado') != '' && 
+            $request->get('bloqueado') != 'TODOS'){
+
+                if($request->get('bloqueado') == 'BLOQUEADOS')
+                    $usuariosQuery = $usuariosQuery->where('bloqueado', true);
+
+                if($request->get('bloqueado') == 'DESBLOQUEADOS')
+                    $usuariosQuery = $usuariosQuery->where('bloqueado', false);
+
+        }
+
+        
+        $itensPorPagina = env('ITENS_POR_PAGINA', 20);
+        $usuarios = $usuariosQuery->paginate( $itensPorPagina );
+
+        return view('usuarios.listagem')
+            ->with('usuarios', $usuarios);
+
+        // ITENS_POR_PAGINA
+
+
+    }
+
+
     public function registrar(){
         return view('auth.register');
     }

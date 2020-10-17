@@ -22,6 +22,10 @@ Auth::routes();
 Route::post('/login', 'Auth\LoginController@logar');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('/usuarios', 'UsuarioController@listar')->name('usuarios');
+Route::get('/usuarios/{idUsuario}', 'UsuarioController@ver')->name('usuarios.ver');
+Route::put('/usuarios/{idUsuario}', 'UsuarioController@mudaBloqueio')->name('usuarios.mudaBloqueio');
+
 Route::get('/registrar', 'UsuarioController@registrar')->name('registrar');
 Route::get('/reenviar-email-confirmacao/{id?}', 'UsuarioController@enviarEmailConfirmacao')->name('reenviar-email-confirmacao');
 Route::post('/confirmar-email', 'UsuarioController@confirmarEmail')->name('confirmar-email-post');
@@ -31,4 +35,6 @@ Route::post('/registrar', 'UsuarioController@efetivarRegistro')->name('efetivarR
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+
+Route::get('/meus-lotes', 'MeusLotesController@meusLotes')->name('meus.lotes');
 

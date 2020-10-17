@@ -16,9 +16,13 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a class="active" href="index.html">home</a></li>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a class="" href="travel_destination.html">Destination</a></l/li>
+                                        <li><a class="active" href="index.html">Início</a></li>
+                                        <li><a href="about.html">Lotes</a></li>
+                                        @if(Auth::check())
+                                        <li><a href="{{route('meus.lotes')}}">Meus Lotes</a></li>
+                                        
+
+                                        <li><a class="" href="{{ route('usuarios') }}">Usuários</a></li>
                                         {{-- <li><a href="#">pages <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
                                                     <li><a href="destination_details.html">Destinations details</a></li>
@@ -32,6 +36,7 @@
                                             </ul>
                                         </li>
                                         <li><a href="contact.html">Contact</a></li> --}}
+                                        @endif
                                     </ul>
                                 </nav>
                             </div>
