@@ -37,4 +37,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/meus-lotes', 'MeusLotesController@meusLotes')->name('meus.lotes');
+Route::get('/meus-lotes/novo', 'MeusLotesController@novoLote')->name('meus.lotes.novo');
 

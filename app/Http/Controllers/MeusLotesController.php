@@ -11,4 +11,10 @@ class MeusLotesController extends Controller
 
         return view('lotes.meus-lotes');
     }
+
+    public function novoLote(Request $request){
+
+        return view('lotes.novo-lote');
+
+    }
 }

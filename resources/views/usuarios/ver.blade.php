@@ -29,7 +29,7 @@
                     </form>
                     <hr>
                     
-                    <p> 
+                    <p id="nome"> 
                       <strong>Nome: </strong> {{$usuario->nome}}
                     </p>
                     <p> 
@@ -55,10 +55,21 @@
     </div>
 </div>
 
-
-
-
-
-
-
 @endsection
+
+{{-- @section('scripts')
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  setTimeout(() => {
+    document.getElementById('nome').innerHTML = 'OUTRA COISA';  
+  }, 2000);
+  
+});
+  
+
+</script>
+
+
+@endsection --}}

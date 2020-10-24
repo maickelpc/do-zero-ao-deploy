@@ -3,17 +3,14 @@
 @section('content')
 <!-- slider_area_start -->
 
-<div class="container" id="app-vue">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Usuarios</div>
+                <div class="card-header">Meus Lotes</div>
 
                 <div class="card-body">
-
-                    [[  message ]]
-                    <input type="text" v-model="message" class="form-control"  name="busca" id="busca" placeholder="Digite nome ou email">
-
+                <a href="{{ route('meus.lotes.novo')}}"class="btn btn-primary mb-2">Novo</a>
                     {{-- <form class="form-inline">                        
                         <div class="form-group mx-sm-6 mb-2">
                           <label for="busca" class="sr-only">Busca</label>
@@ -62,29 +59,5 @@
         </div>
     </div>
 </div>
-
-@endsection
-
-
-@section('scripts')
-
-<script>
-
-var app = new Vue({
-  el: '#app-vue',
-
-  data: {
-    message: 'Hello Vue!'
-  },
-
-
-
-
-
-  delimiters: [ '[[', ']]' ]
-})
-
-</script>
-
 
 @endsection
