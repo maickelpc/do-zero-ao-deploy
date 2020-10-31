@@ -1910,6 +1910,8 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1950,11 +1952,162 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // import {Money} from 'v-money';
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  directives: {
+    VMoney: v_money__WEBPACK_IMPORTED_MODULE_1__["VMoney"]
+  },
   data: function data() {
     return {
-      titulo: ''
+      titulo: '',
+      descricao: '',
+      lance_inicial: 0,
+      valor_incremento: 0,
+      nota_fiscal: '',
+      justificativa_nao_envio_nota_fiscal: '',
+      tipo: 'INDETERMINADO',
+      tempo: 5,
+      localidade: '',
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        suffix: '',
+        precision: 2,
+        masked: false
+      },
+      success: null,
+      errors: null
     };
   },
   validations: {
@@ -1962,6 +2115,38 @@ __webpack_require__.r(__webpack_exports__);
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
       minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(5),
       maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(100)
+    },
+    descricao: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(5),
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(10000)
+    },
+    lance_inicial: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    valor_incremento: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    nota_fiscal: {
+      required: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["requiredIf"])(function () {
+        return this.justificativa_nao_envio_nota_fiscal.length == 0;
+      })
+    },
+    justificativa_nao_envio_nota_fiscal: {
+      required: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["requiredIf"])(function () {
+        return this.nota_fiscal.length == 0;
+      })
+    },
+    tipo: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    tempo: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    localidade: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(5),
+      maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["maxLength"])(50)
     }
   },
   mounted: function mounted() {},
@@ -1975,9 +2160,24 @@ __webpack_require__.r(__webpack_exports__);
         return false;
       }
 
-      alert('Pagina Submetida');
+      ;
+      var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      };
+      axios.post('/meus-lotes', this.$data, {
+        headers: headers
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (erros) {
+        if (erros.response.status == 403) {
+          alert("Seu pedido não foi aceito, Verifique se você confirmou seu email!");
+        }
+
+        console.log(erros, erros.response);
+      });
     }
-  }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -37557,6 +37757,17 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/v-money/dist/v-money.js":
+/*!**********************************************!*\
+  !*** ./node_modules/v-money/dist/v-money.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function(e,t){ true?module.exports=t():undefined})(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p=".",t(t.s=9)}([function(e,t,n){"use strict";t.a={prefix:"",suffix:"",thousands:",",decimal:".",precision:2}},function(e,t,n){"use strict";var r=n(2),i=n(5),u=n(0);t.a=function(e,t){if(t.value){var o=n.i(i.a)(u.a,t.value);if("INPUT"!==e.tagName.toLocaleUpperCase()){var a=e.getElementsByTagName("input");1!==a.length||(e=a[0])}e.oninput=function(){var t=e.value.length-e.selectionEnd;e.value=n.i(r.a)(e.value,o),t=Math.max(t,o.suffix.length),t=e.value.length-t,t=Math.max(t,o.prefix.length+1),n.i(r.b)(e,t),e.dispatchEvent(n.i(r.c)("change"))},e.onfocus=function(){n.i(r.b)(e,e.value.length-o.suffix.length)},e.oninput(),e.dispatchEvent(n.i(r.c)("input"))}}},function(e,t,n){"use strict";function r(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:m.a;"number"==typeof e&&(e=e.toFixed(o(t.precision)));var n=e.indexOf("-")>=0?"-":"",r=u(e),i=c(r,t.precision),a=d(i).split("."),p=a[0],l=a[1];return p=f(p,t.thousands),t.prefix+n+s(p,l,t.decimal)+t.suffix}function i(e,t){var n=e.indexOf("-")>=0?-1:1,r=u(e),i=c(r,t);return parseFloat(i)*n}function u(e){return d(e).replace(/\D+/g,"")||"0"}function o(e){return a(0,e,20)}function a(e,t,n){return Math.max(e,Math.min(t,n))}function c(e,t){var n=Math.pow(10,t);return(parseFloat(e)/n).toFixed(o(t))}function f(e,t){return e.replace(/(\d)(?=(?:\d{3})+\b)/gm,"$1"+t)}function s(e,t,n){return t?e+n+t:e}function d(e){return e?e.toString():""}function p(e,t){var n=function(){e.setSelectionRange(t,t)};e===document.activeElement&&(n(),setTimeout(n,1))}function l(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!0),t}var m=n(0);n.d(t,"a",function(){return r}),n.d(t,"d",function(){return i}),n.d(t,"b",function(){return p}),n.d(t,"c",function(){return l})},function(e,t,n){"use strict";function r(e,t){t&&Object.keys(t).map(function(e){a.a[e]=t[e]}),e.directive("money",o.a),e.component("money",u.a)}Object.defineProperty(t,"__esModule",{value:!0});var i=n(6),u=n.n(i),o=n(1),a=n(0);n.d(t,"Money",function(){return u.a}),n.d(t,"VMoney",function(){return o.a}),n.d(t,"options",function(){return a.a}),n.d(t,"VERSION",function(){return c});var c="0.8.1";t.default=r,"undefined"!=typeof window&&window.Vue&&window.Vue.use(r)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),i=n(0),u=n(2);t.default={name:"Money",props:{value:{required:!0,type:[Number,String],default:0},masked:{type:Boolean,default:!1},precision:{type:Number,default:function(){return i.a.precision}},decimal:{type:String,default:function(){return i.a.decimal}},thousands:{type:String,default:function(){return i.a.thousands}},prefix:{type:String,default:function(){return i.a.prefix}},suffix:{type:String,default:function(){return i.a.suffix}}},directives:{money:r.a},data:function(){return{formattedValue:""}},watch:{value:{immediate:!0,handler:function(e,t){var r=n.i(u.a)(e,this.$props);r!==this.formattedValue&&(this.formattedValue=r)}}},methods:{change:function(e){this.$emit("input",this.masked?e.target.value:n.i(u.d)(e.target.value,this.precision))}}}},function(e,t,n){"use strict";t.a=function(e,t){return e=e||{},t=t||{},Object.keys(e).concat(Object.keys(t)).reduce(function(n,r){return n[r]=void 0===t[r]?e[r]:t[r],n},{})}},function(e,t,n){var r=n(7)(n(4),n(8),null,null);e.exports=r.exports},function(e,t){e.exports=function(e,t,n,r){var i,u=e=e||{},o=typeof e.default;"object"!==o&&"function"!==o||(i=e,u=e.default);var a="function"==typeof u?u.options:u;if(t&&(a.render=t.render,a.staticRenderFns=t.staticRenderFns),n&&(a._scopeId=n),r){var c=a.computed||(a.computed={});Object.keys(r).forEach(function(e){var t=r[e];c[e]=function(){return t}})}return{esModule:i,exports:u,options:a}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("input",{directives:[{name:"money",rawName:"v-money",value:{precision:e.precision,decimal:e.decimal,thousands:e.thousands,prefix:e.prefix,suffix:e.suffix},expression:"{precision, decimal, thousands, prefix, suffix}"}],staticClass:"v-money",attrs:{type:"tel"},domProps:{value:e.formattedValue},on:{change:e.change}})},staticRenderFns:[]}},function(e,t,n){e.exports=n(3)}])});
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LoteComponent.vue?vue&type=template&id=2fd52f4e&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LoteComponent.vue?vue&type=template&id=2fd52f4e& ***!
@@ -37661,6 +37872,536 @@ var render = function() {
                                 _vm._v(
                                   "Máximo 100 Caracteres (" +
                                     _vm._s(_vm.titulo.length) +
+                                    " caracteres)"
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: { for: "Descricao" }
+                },
+                [_vm._v("Decrição:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.descricao,
+                      expression: "descricao"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid":
+                      _vm.$v.descricao.$invalid && _vm.$v.descricao.$dirty
+                  },
+                  attrs: { name: "descricao", id: "Descricao", rows: "10" },
+                  domProps: { value: _vm.descricao },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.descricao = $event.target.value
+                      },
+                      _vm.$v.descricao.$touch
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.descricao.$invalid && _vm.$v.descricao.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.descricao.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.$v.descricao.minLength
+                            ? _c("li", [
+                                _vm._v(
+                                  "Mínimo 5 Caracteres (" +
+                                    _vm._s(_vm.descricao.length) +
+                                    " caracteres)"
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.$v.descricao.maxLength
+                            ? _c("li", [
+                                _vm._v(
+                                  "Máximo 100 Caracteres (" +
+                                    _vm._s(_vm.descricao.length) +
+                                    " caracteres)"
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: { for: "lance_inicial" }
+                },
+                [_vm._v("Lance Inicial:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.lazy",
+                      value: _vm.lance_inicial,
+                      expression: "lance_inicial",
+                      modifiers: { lazy: true }
+                    },
+                    {
+                      name: "money",
+                      rawName: "v-money",
+                      value: _vm.money,
+                      expression: "money"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid":
+                      _vm.$v.lance_inicial.$invalid &&
+                      _vm.$v.lance_inicial.$dirty
+                  },
+                  attrs: { type: "text", id: "lance_inicial" },
+                  domProps: { value: _vm.lance_inicial },
+                  on: {
+                    input: _vm.$v.lance_inicial.$touch,
+                    change: function($event) {
+                      _vm.lance_inicial = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.lance_inicial.$invalid && _vm.$v.lance_inicial.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.lance_inicial.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: { for: "valor_incremento" }
+                },
+                [_vm._v("Valor Mínimo de Incremento:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.lazy",
+                      value: _vm.valor_incremento,
+                      expression: "valor_incremento",
+                      modifiers: { lazy: true }
+                    },
+                    {
+                      name: "money",
+                      rawName: "v-money",
+                      value: _vm.money,
+                      expression: "money"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid":
+                      _vm.$v.valor_incremento.$invalid &&
+                      _vm.$v.valor_incremento.$dirty
+                  },
+                  attrs: { type: "text", id: "valor_incremento" },
+                  domProps: { value: _vm.valor_incremento },
+                  on: {
+                    input: _vm.$v.valor_incremento.$touch,
+                    change: function($event) {
+                      _vm.valor_incremento = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.valor_incremento.$invalid &&
+                _vm.$v.valor_incremento.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.valor_incremento.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: { for: "Nota Fiscal" }
+                },
+                [_vm._v("Nota Fiscal:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.nota_fiscal,
+                      expression: "nota_fiscal"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid":
+                      _vm.$v.nota_fiscal.$invalid && _vm.$v.nota_fiscal.$dirty
+                  },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.nota_fiscal },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.nota_fiscal = $event.target.value
+                      },
+                      _vm.$v.nota_fiscal.$touch
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.nota_fiscal.$invalid && _vm.$v.nota_fiscal.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.nota_fiscal.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: {
+                    for: "Justificativa para não informação de nota fiscal"
+                  }
+                },
+                [_vm._v("Justificativa para não informação de nota fiscal:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.justificativa_nao_envio_nota_fiscal,
+                      expression: "justificativa_nao_envio_nota_fiscal"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid":
+                      _vm.$v.justificativa_nao_envio_nota_fiscal.$invalid &&
+                      _vm.$v.justificativa_nao_envio_nota_fiscal.$dirty
+                  },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.justificativa_nao_envio_nota_fiscal },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.justificativa_nao_envio_nota_fiscal =
+                          $event.target.value
+                      },
+                      _vm.$v.justificativa_nao_envio_nota_fiscal.$touch
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.justificativa_nao_envio_nota_fiscal.$invalid &&
+                _vm.$v.justificativa_nao_envio_nota_fiscal.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.justificativa_nao_envio_nota_fiscal.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: { for: "Tipo" }
+                },
+                [_vm._v("Tipo de Leilão / Tempo do Leilão:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tipo,
+                        expression: "tipo"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.$v.tipo.$invalid && _vm.$v.tipo.$dirty
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.tipo = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.$v.tipo.$touch
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { domProps: { value: "DETERMINADO" } }, [
+                      _vm._v("Tempo determinado")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { domProps: { value: "INDETERMINADO" } }, [
+                      _vm._v("Minutos após último lance")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.$v.tipo.$invalid && _vm.$v.tipo.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.tipo.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.tempo,
+                      expression: "tempo"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid": _vm.$v.tempo.$invalid && _vm.$v.tempo.$dirty
+                  },
+                  attrs: { type: "number" },
+                  domProps: { value: _vm.tempo },
+                  on: {
+                    change: _vm.$v.tempo.$touch,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.tempo = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.tempo.$invalid && _vm.$v.tempo.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.tempo.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-4 col-form-label text-md-right",
+                  attrs: { for: "Tipo" }
+                },
+                [_vm._v("Localidade do Produto:")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.localidade,
+                      expression: "localidade"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid":
+                      _vm.$v.localidade.$invalid && _vm.$v.localidade.$dirty
+                  },
+                  attrs: {
+                    type: "text",
+                    autocomplete: "localidade",
+                    autofocus: ""
+                  },
+                  domProps: { value: _vm.localidade },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.localidade = $event.target.value
+                      },
+                      _vm.$v.localidade.$touch
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _vm.$v.localidade.$invalid && _vm.$v.localidade.$dirty
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      [
+                        _c("ul", [
+                          !_vm.$v.localidade.required
+                            ? _c("li", [_vm._v("Campo Obrigatório")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.$v.localidade.minLength
+                            ? _c("li", [
+                                _vm._v(
+                                  "Mínimo 5 Caracteres (" +
+                                    _vm._s(_vm.localidade.length) +
+                                    " caracteres)"
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.$v.localidade.maxLength
+                            ? _c("li", [
+                                _vm._v(
+                                  "Máximo 50 Caracteres (" +
+                                    _vm._s(_vm.localidade.length) +
                                     " caracteres)"
                                 )
                               ])

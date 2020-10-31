@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "v-money": "^0.8.1",
         "vuelidate": "^0.7.6",
         "vuetify": "^2.3.15"
     }

@@ -5,9 +5,7 @@ import Vue from 'vue';
 import Vuetify from "vuetify";
 import Vuelidate from 'vuelidate'
 
-
 import LoteComponent from './components/LoteComponent.vue'
-
 
 Vue.use(Vuetify);
 Vue.use(Vuelidate);
@@ -15,6 +13,7 @@ Vue.use(Vuelidate);
 const app = new Vue({
     components: {
         LoteComponent
+        
     },
     el: '#app',
 
@@ -22,3 +21,4 @@ const app = new Vue({
         // alert("OPA App Funcionando");
     }
 });
+
