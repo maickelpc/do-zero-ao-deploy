@@ -47,7 +47,7 @@
                             <div class="col-md-8">
                                  <input type="text" id="lance_inicial" class="form-control"  @input="$v.lance_inicial.$touch"
                                     :class="{'is-invalid': $v.lance_inicial.$invalid && $v.lance_inicial.$dirty}"
-                                    v-model.lazy="lance_inicial" v-money="money" />
+                                    v-model.lazy="lance_inicial"  />
                                 <span v-if="$v.lance_inicial.$invalid && $v.lance_inicial.$dirty" class="invalid-feedback" role="alert">    
                                     <ul>
                                         <li v-if="!$v.lance_inicial.required">Campo Obrigatório</li>
@@ -62,7 +62,7 @@
                             <div class="col-md-8">
                                  <input type="text" id="valor_incremento" class="form-control"  @input="$v.valor_incremento.$touch"
                                     :class="{'is-invalid': $v.valor_incremento.$invalid && $v.valor_incremento.$dirty}"
-                                    v-model.lazy="valor_incremento" v-money="money" />
+                                    v-model.lazy="valor_incremento"  />
                                 <span v-if="$v.valor_incremento.$invalid && $v.valor_incremento.$dirty" class="invalid-feedback" role="alert">    
                                     <ul>
                                         <li v-if="!$v.valor_incremento.required">Campo Obrigatório</li>
@@ -170,12 +170,12 @@
 
 import { required, minLength, maxLength, requiredIf } from 'vuelidate/lib/validators'
 // import {Money} from 'v-money';
-import {VMoney} from 'v-money'
+// import {VMoney} from 'v-money'
 
 export default {
-    directives: {
-        VMoney
-    },
+    // directives: {
+    //     VMoney
+    // },
 
     data(){
         return {

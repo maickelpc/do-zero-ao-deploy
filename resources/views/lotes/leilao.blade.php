@@ -6,8 +6,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-          
-          <meus-lotes-component></meus-lotes-component>
+        
+        <leilao-component lote="{{ $lote }}"></leilao-component>
 
         </div>
     </div>

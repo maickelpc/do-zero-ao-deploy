@@ -40,3 +40,10 @@ Route::get('/meus-lotes', 'MeusLotesController@meusLotes')->name('meus.lotes');
 Route::get('/meus-lotes/novo', 'MeusLotesController@novoLote')->name('meus.lotes.novo');
 Route::post('/meus-lotes', 'MeusLotesController@criarLote')->name('meus.lotes.criar');
 
+Route::get('/lote/{id}', 'LotesController@edit')->name('lote.edit');
+
+
+
+
+// Api
+Route::get('api2/meus-lotes', 'MeusLotesController@meusLotesApi');

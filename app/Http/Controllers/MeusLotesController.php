@@ -29,4 +29,18 @@ class MeusLotesController extends Controller
 
         return response()->json($lote, 201);
     }
+
+
+    public function meusLotesApi(Request $request){
+        
+        $query = Lote::where('proprietario_id', Auth::user()->id);
+
+        if($request->has('texto'))
+            $query = $query->where('titulo', 'ilike', "%{$request->get('texto')}%");
+
+        $dados = $query->paginate(4);
+        return response()->json($dados, 200);
+    }
+
+
 }
